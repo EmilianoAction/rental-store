@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: API-GATEWAY
+  config:
+    import:
+      - 'configserver:http://localhost:8888'
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: customer
+              uri: lb://customer
+              predicates:
+                - Path=/api/customer/**
+            - id: inventory
+              uri: lb://inventory
+              predicates:
+                - Path=/api/inventory/**
+
+server:
+  port: 9090
